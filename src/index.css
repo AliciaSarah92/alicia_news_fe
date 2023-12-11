@@ -12,8 +12,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.article-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
-a {
+.article-list-item {
+    border-bottom: 1px solid red;
+    padding: 10px;
+}
+
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
@@ -65,4 +75,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
