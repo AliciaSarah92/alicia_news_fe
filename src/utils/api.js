@@ -12,4 +12,8 @@ function getArticle(id) {
     return api.get(`https:/alicia-news.onrender.com/api/articles/${id}`);
 }
 
-export { getArticles, getArticle };
+function getComments(id) {
+    return api.get(`https:/alicia-news.onrender.com/api/articles/${id}/comments`);
+}
+
+export { getArticles, getArticle, getComments };

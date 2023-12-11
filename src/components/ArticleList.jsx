@@ -1,8 +1,15 @@
 import { React, useState } from 'react';
 import dayjs from 'dayjs';
-
+import { useNavigate } from 'react-router-dom';
 
 const ArticleList = props => {
+    const navigate = useNavigate();
+    const handleClick = (event, id) => {
+        event.preventDefault();
+        navigate(`/articles/${id}`, { state: { id } });
+    };
+
+
     return (
         <div>
             <ul className='article-list'>
@@ -20,6 +27,7 @@ const ArticleList = props => {
                             <p><span style={{fontWeight: 'bold'}}>Created at: </span>{dayjs(article.created_at).format('MMMM D, YYYY h:mm A')}</p>
                             <p><span style={{fontWeight: 'bold'}}>Votes: </span>{article.votes}</p>
                             <p><span style={{fontWeight: 'bold'}}>Comment count: </span>{article.comment_count}</p>
+                            <button onClick={event => handleClick(event, article.article_id)}>Read more</button>
                         </li>
                     );
                 })}

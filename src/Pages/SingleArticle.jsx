@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getArticle } from '../utils/api';
 import dayjs from 'dayjs';
+import Comments from '../components/Comments';
 
 const SingleArticle = () => {
     const { id } = useParams();
@@ -49,6 +50,9 @@ const SingleArticle = () => {
                 <span style={{ fontWeight: 'bold' }}>Comment count: </span>
                 {article.comment_count}
             </p>
+            <div>
+                <Comments />
+            </div>
         </div>
     );
 };

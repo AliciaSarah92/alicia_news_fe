@@ -1,13 +1,7 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 const Article = props => {
-    // const navigate = useNavigate();
-    // const handleClick = (event, id) => {
-    //     event.preventDefault();
-    //     navigate(`/articles/${id}`, { state: { id } });
-    // };
     const { article } = props;
 
     return (
@@ -38,7 +32,6 @@ const Article = props => {
                 <span style={{ fontWeight: 'bold' }}>Comment count: </span>
                 {article.comment_count}
             </p>
-            {/* <button onClick={event => handleClick(event, article.article_id)}>Read more</button> */}
         </li>
     );
 };

@@ -12,16 +12,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.article-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.article-list-item {
-    border-bottom: 1px solid red;
-    padding: 10px;
-}
 
 body {
     margin: 0;
@@ -35,6 +25,30 @@ body {
     width: 100%;
     height: 100%;
   }
+
+.article-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.article-list-item {
+    border-bottom: 1px solid red;
+    padding: 10px;
+}
+
+.comments-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.comments-list-item {
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
 
 /* a {
   font-weight: 500;
