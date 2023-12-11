@@ -1,17 +1,28 @@
-import React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { React, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getArticle } from '../utils/api';
 import dayjs from 'dayjs';
 
-const Article = props => {
-    // const navigate = useNavigate();
-    // const handleClick = (event, id) => {
-    //     event.preventDefault();
-    //     navigate(`/articles/${id}`, { state: { id } });
-    // };
-    const { article } = props;
+const SingleArticle = () => {
+    const { id } = useParams();
+    const [article, setArticle] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        getArticle(id).then(({ data }) => {
+            setArticle(data);
+        })
+        .catch(err => {
+            setError(true);
+            setIsLoading
+        })
+    }, [id]);
+
+    if (error) return <h1>Something went wrong!</h1>;
 
     return (
-        <li>
+        <div>
             <h2>{article.title}</h2>
             <p>
                 <span style={{ fontWeight: 'bold' }}>Topic: </span>
@@ -38,9 +49,8 @@ const Article = props => {
                 <span style={{ fontWeight: 'bold' }}>Comment count: </span>
                 {article.comment_count}
             </p>
-            {/* <button onClick={event => handleClick(event, article.article_id)}>Read more</button> */}
-        </li>
+        </div>
     );
 };
 
-export default Article;
+export default SingleArticle;

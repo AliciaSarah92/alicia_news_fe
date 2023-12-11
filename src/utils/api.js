@@ -8,4 +8,8 @@ function getArticles() {
     return api.get('https:/alicia-news.onrender.com/api/articles');
 }
 
-export { getArticles };
+function getArticle(id) {
+    return api.get(`https:/alicia-news.onrender.com/api/articles/${id}`);
+}
+
+export { getArticles, getArticle };
