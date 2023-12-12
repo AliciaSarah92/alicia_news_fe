@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home'
+import SingleArticle from './Pages/SingleArticle'
 
 function App() {
     return (
@@ -11,10 +12,10 @@ function App() {
                     path="/"
                     element={<Home />}
                 />
-                {/* <Route
-                    path="/single-item/:id"
-                    element={<SingleItem handleAddToBasket={handleAddToBasket} />} */}
-                {/* /> */}
+                <Route
+                    path="/articles/:id"
+                    element={<SingleArticle />}
+                 />
                 {/* <Route
                     path="/basket"
                     element={<Basket basket={basket} />}
