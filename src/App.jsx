@@ -4,10 +4,12 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home'
 import SingleArticle from './Pages/SingleArticle'
 import Users from './Pages/Users'
+import Navbar from './components/Navbar';
 
 function App() {
     return (
         <>
+            <Navbar />
             <Routes>
                 <Route
                     path="/"
