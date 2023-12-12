@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
 const ArticleList = props => {
-   
     return (
         <div>
             <ul className="article-list">
@@ -27,10 +26,7 @@ const ArticleList = props => {
                                 <span className="bold-styling">Author: </span>
                                 {article.author}
                             </p>
-                            <p>
-                                <span className='date-size'>Created at: </span>
-                                {dayjs(article.created_at).format('MMMM D, YYYY h:mm A')}
-                            </p>
+
                             <p>
                                 <span className="bold-styling">Votes: </span>
                                 {article.votes}
@@ -39,7 +35,10 @@ const ArticleList = props => {
                                 <span className="bold-styling">Comment count: </span>
                                 {article.comment_count}
                             </p>
-                            <Link to={`/articles/${article.article_id}`}>Read more</Link>
+                            <p className='date-size'>
+                               Created at: {dayjs(article.created_at).format('MMMM D, YYYY h:mm A')}
+                            </p>
+                            <Link className='link-btn' to={`/articles/${article.article_id}`}>Read more</Link>
                         </li>
                     );
                 })}

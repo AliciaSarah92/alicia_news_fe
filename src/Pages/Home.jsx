@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react'
 import ArticleList from '../components/ArticleList'
 import { getArticles } from '../utils/api'
+import Header from '../components/Header'
 
 const Home = () => {
     const [articles, setArticles] = useState([])
@@ -17,6 +18,7 @@ const Home = () => {
 
   return (
     <div>
+        <Header />
         <ArticleList articles={articles} />
     </div>
   )
