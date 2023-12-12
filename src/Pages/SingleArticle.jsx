@@ -9,6 +9,7 @@ const SingleArticle = () => {
     const [article, setArticle] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
+    // const [votes, setVotes] = useState(0);
 
     useEffect(() => {
         getArticle(id).then(({ data }) => {
