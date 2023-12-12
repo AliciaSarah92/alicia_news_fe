@@ -26,15 +26,26 @@ const Comments = () => {
     return (
         <div>
             <h2>Comments</h2>
-            <ul className='comments-list'>
+            <ul className="comments-list">
                 {comments.length &&
                     comments.map(comment => {
                         return (
-                            <li className='comments-list-item' key={comment.comment_id}>
+                            <li
+                                className="comments-list-item"
+                                key={comment.comment_id}
+                            >
                                 <p>{comment.body}</p>
-                                <p><span style={{fontWeight: 'bold'}} > Author: </span>{comment.author}</p>
-                                <p><span style={{fontWeight: 'bold'}}> Votes: </span>{comment.votes}</p>
-                                <p><span style={{fontSize: '12px'}}>{dayjs(comment.created_at).format('MMMM D, YYYY h:mm A')}</span></p>
+                                <p>
+                                    <span className="bold-styling"> Author: </span>
+                                    {comment.author}
+                                </p>
+                                <p>
+                                    <span className="bold-styling"> Votes: </span>
+                                    {comment.votes}
+                                </p>
+                                <p>
+                                    <span className="bold-styling">{dayjs(comment.created_at).format('MMMM D, YYYY h:mm A')}</span>
+                                </p>
                             </li>
                         );
                     })}
