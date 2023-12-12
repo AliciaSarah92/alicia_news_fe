@@ -33,7 +33,7 @@ const ArticleList = props => {
                                 {article.author}
                             </p>
                             <p>
-                                <span className="bold-styling">Created at: </span>
+                                <span className='date-size'>Created at: </span>
                                 {dayjs(article.created_at).format('MMMM D, YYYY h:mm A')}
                             </p>
                             <p>
