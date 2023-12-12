@@ -6,7 +6,7 @@ const ArticleList = props => {
     return (
         <div>
             <ul className="article-list">
-                {props.articles.map(article => {
+                {props.articles && props.articles.map(article => {
                     return (
                         <li
                             className="article-list-item"
