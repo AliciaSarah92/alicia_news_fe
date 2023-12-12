@@ -1,14 +1,9 @@
 import { React, useState } from 'react';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ArticleList = props => {
-    const navigate = useNavigate();
-    const handleClick = (event, id) => {
-        event.preventDefault();
-        navigate(`/articles/${id}`, { state: { id } });
-    };
-
+   
     return (
         <div>
             <ul className="article-list">
@@ -44,7 +39,7 @@ const ArticleList = props => {
                                 <span className="bold-styling">Comment count: </span>
                                 {article.comment_count}
                             </p>
-                            <button onClick={event => handleClick(event, article.article_id)}>Read more</button>
+                            <Link to={`/articles/${article.article_id}`}>Read more</Link>
                         </li>
                     );
                 })}
