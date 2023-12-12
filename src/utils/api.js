@@ -1,15 +1,19 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseUrl: 'https://alicia-news.onrender.com/api'
+    baseURL: 'https://alicia-news.onrender.com/api'
 })
 
 function getArticles() {
-    return api.get('https:/alicia-news.onrender.com/api/articles');
+    return api.get('/articles');
 }
 
 function getArticle(id) {
-    return api.get(`https:/alicia-news.onrender.com/api/articles/${id}`);
+    return api.get(`/articles/${id}`);
 }
 
-export { getArticles, getArticle };
+function getComments(id) {
+    return api.get(`/articles/${id}/comments`);
+}
+
+export { getArticles, getArticle, getComments };
