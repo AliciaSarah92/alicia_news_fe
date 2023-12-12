@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home'
@@ -7,9 +7,11 @@ import Users from './Pages/Users'
 import Navbar from './components/Navbar';
 
 function App() {
+    const [loggedIn, setLoggedIn] = useState(null);
+
     return (
         <>
-            <Navbar />
+            <Navbar loggedIn={loggedIn} />
             <Routes>
                 <Route
                     path="/"
@@ -21,7 +23,7 @@ function App() {
                  />
                 <Route
                     path="/users"
-                    element={<Users />}
+                    element={<Users setLoggedIn={setLoggedIn}/>}
                 />
                 {/* <Route
                     path="/users"

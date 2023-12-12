@@ -1,16 +1,17 @@
 import { React, useState, useEffect } from 'react';
 import { getUsers } from '../utils/api';
+import Navbar from '../components/Navbar';
 
-const Users = () => {
+const Users = props => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(false);
-    const [login, setLogin] = useState(false);
+    
 
     const handleClick = (event, user) => {
         event.preventDefault();
-        setLogin(true);
+        props.setLoggedIn(user);
         localStorage.setItem('user', JSON.stringify(user));
-        window.alert(`You are logged in as ${user.username}`)
+        window.alert(`You are logged in as ${user.username}`);
     };
 
     useEffect(() => {
@@ -27,7 +28,7 @@ const Users = () => {
         <div>
             <h2>Users</h2>
             <ul className="users-list">
-                {users.length &&
+                {users.length > 0 &&
                     users.map(user => {
                         return (
                             <li
