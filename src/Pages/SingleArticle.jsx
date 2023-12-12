@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
 import { updateVotes, getArticle, updateDownVotes } from '../utils/api';
-import { HandThumbsDownFill, HandThumbsUpFill  } from 'react-bootstrap-icons';
+import { HandThumbsDownFill, HandThumbsUpFill } from 'react-bootstrap-icons';
 
 const SingleArticle = () => {
     const { id } = useParams();
@@ -13,16 +13,40 @@ const SingleArticle = () => {
 
     const handleVote = (event, article_id) => {
         event.preventDefault();
-        updateVotes(article_id).then(({ data }) => {
-            setArticle(data.article);
-        });
+        setArticle(prevArticle => ({
+            ...prevArticle,
+            votes: prevArticle.votes + 1,
+        }));
+        updateVotes(article_id)
+            .then(({ data }) => {
+                setArticle(data.article);
+            })
+            .catch(err => {
+                setArticle(prevArticle => ({
+                    ...prevArticle,
+                    votes: prevArticle.votes - 1,
+                }));
+            });
     };
 
     const handleDownVote = (event, article_id) => {
         event.preventDefault();
-        updateDownVotes(article_id).then(({ data }) => {
-            setArticle(data.article);
-        });
+
+        setArticle(prevArticle => ({
+            ...prevArticle,
+            votes: prevArticle.votes - 1,
+        }));
+
+        updateDownVotes(article_id)
+            .then(({ data }) => {
+                setArticle(data.article);
+            })
+            .catch(err => {
+                setArticle(prevArticle => ({
+                    ...prevArticle,
+                    votes: prevArticle.votes + 1,
+                }));
+            });
     };
 
     useEffect(() => {
@@ -38,6 +62,7 @@ const SingleArticle = () => {
     }, [id]);
 
     if (error) return <h1>Something went wrong!</h1>;
+    if (isLoading) return <p>Loading...</p>;
 
     return (
         <div>
