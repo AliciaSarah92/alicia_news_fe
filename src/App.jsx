@@ -1,8 +1,8 @@
-import React from 'react';
+import { React } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home'
-import SingleArticle from './Pages/SingleArticle'
+import Home from './Pages/Home';
+import SingleArticle from './Pages/SingleArticle';
 
 function App() {
     return (
@@ -15,7 +15,7 @@ function App() {
                 <Route
                     path="/articles/:id"
                     element={<SingleArticle />}
-                 />
+                />
                 {/* <Route
                     path="/basket"
                     element={<Basket basket={basket} />}

@@ -1,24 +1,40 @@
 import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArticle } from '../utils/api';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
+import { updateVotes, getArticle, updateDownVotes } from '../utils/api';
+import { HandThumbsDownFill, HandThumbsUpFill  } from 'react-bootstrap-icons';
 
 const SingleArticle = () => {
     const { id } = useParams();
     const [article, setArticle] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
-    // const [votes, setVotes] = useState(0);
+
+    const handleVote = (event, article_id) => {
+        event.preventDefault();
+        updateVotes(article_id).then(({ data }) => {
+            setArticle(data.article);
+        });
+    };
+
+    const handleDownVote = (event, article_id) => {
+        event.preventDefault();
+        updateDownVotes(article_id).then(({ data }) => {
+            setArticle(data.article);
+        });
+    };
 
     useEffect(() => {
-        getArticle(id).then(({ data }) => {
-            setArticle(data);
-        })
-        .catch(err => {
-            setError(true);
-            setIsLoading
-        })
+        getArticle(id)
+            .then(({ data }) => {
+                setArticle(data);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                setError(true);
+                setIsLoading;
+            });
     }, [id]);
 
     if (error) return <h1>Something went wrong!</h1>;
@@ -46,10 +62,25 @@ const SingleArticle = () => {
             <p>
                 <span style={{ fontWeight: 'bold' }}>Votes: </span>
                 {article.votes}
-            </p>
-            <p>
-                <span style={{ fontWeight: 'bold' }}>Comment count: </span>
-                {article.comment_count}
+                <br />
+                <button
+                    className="votes-btn"
+                    onClick={event => {
+                        handleVote(event, article.article_id);
+                    }}
+                >
+                    <HandThumbsUpFill />
+                    Like
+                </button>
+                <button
+                    className="votes-btn"
+                    onClick={event => {
+                        handleDownVote(event, article.article_id);
+                    }}
+                >
+                    <HandThumbsDownFill />
+                    Dislike
+                </button>
             </p>
             <div>
                 <Comments />
