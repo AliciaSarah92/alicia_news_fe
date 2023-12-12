@@ -3,6 +3,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home'
 import SingleArticle from './Pages/SingleArticle'
+import Users from './Pages/Users'
 
 function App() {
     return (
@@ -16,14 +17,14 @@ function App() {
                     path="/articles/:id"
                     element={<SingleArticle />}
                  />
-                {/* <Route
-                    path="/basket"
-                    element={<Basket basket={basket} />}
-                />
                 <Route
                     path="/users"
+                    element={<Users />}
+                />
+                {/* <Route
+                    path="/users"
                     element={<User />}
-                /> */}
+                />  */}
             </Routes>
         </>
     );

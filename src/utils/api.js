@@ -16,4 +16,13 @@ function getComments(id) {
     return api.get(`/articles/${id}/comments`);
 }
 
-export { getArticles, getArticle, getComments };
+function getUsers() {
+    return api.get('/users');
+}
+
+function postComment(id, comment) {
+    return api.post(`/articles/${id}/comments/${comments_id}`, comment);
+}
+
+
+export { getArticles, getArticle, getComments, postComment, getUsers };
