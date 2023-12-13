@@ -20,8 +20,9 @@ function getUsers() {
     return api.get('/users');
 }
 
-function postComment(id, comment) {
-    return api.post(`/articles/${id}/comments/${comments_id}`, comment);
+function postComment(params) {
+    const {username, body, article_id} = params;
+    return api.post(`/articles/${article_id}/comments`, {username:username, body:body, article_id:article_id});
 }
 
 
