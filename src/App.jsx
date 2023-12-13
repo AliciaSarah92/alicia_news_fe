@@ -21,7 +21,7 @@ function App() {
                 />
                 <Route
                     path="/articles/:id"
-                    element={<SingleArticle />}
+                    element={<SingleArticle loggedIn={loggedIn} />}
                 />
                 <Route
                     path="/users"

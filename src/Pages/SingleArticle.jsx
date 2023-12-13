@@ -4,8 +4,8 @@ import { getArticle, postComment } from '../utils/api';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
 import Form from 'react-bootstrap/Form';
-
-const SingleArticle = () => {
+ 
+const SingleArticle = props => {
     const { id } = useParams();
     const [article, setArticle] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +36,7 @@ const SingleArticle = () => {
             [event.target.name]: event.target.value,
         });
     };
-
+    
     const handleSubmit = event => {
         event.preventDefault();
 

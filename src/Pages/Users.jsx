@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import { getUsers } from '../utils/api';
-import Navbar from '../components/Navbar';
 
 const Users = props => {
     const [users, setUsers] = useState([]);
