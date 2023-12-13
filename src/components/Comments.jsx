@@ -8,7 +8,6 @@ const Comments = props => {
     const [comments, setComments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [commentsLoaded, setCommentsLoaded] = useState(false);
     
     useEffect(() => {
         getComments(id)
@@ -23,10 +22,11 @@ const Comments = props => {
     }, [id]);
 
     useEffect(() => {
-        if (props.comment && commentsLoaded) {
-            setComments(prevComments => [props.comment, ...prevComments]);
+        if (props.newComment) {
+            props.setNewCommentOne(false);
+            comments.unshift(props.comment);
         }
-    }, [props.comment, commentsLoaded]);
+    }, [props.newComment]);
 
     if (error) return <h1>Could not load comments</h1>;
 

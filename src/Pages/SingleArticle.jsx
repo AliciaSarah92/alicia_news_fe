@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { updateVotes, getArticle, updateDownVotes, postComment } from '../utils/api';
 import { HandThumbsDownFill, HandThumbsUpFill } from 'react-bootstrap-icons';
 
@@ -13,6 +14,7 @@ const SingleArticle = props => {
     const [error, setError] = useState(false);
     const user = localStorage.getItem('user');
     const initialValue = JSON.parse(user);
+    const [newComment, setNewComment] = useState(false);
     const [comment, setComment] = useState({
         username: initialValue ? initialValue.username : 'Guest',
         body: '',
@@ -78,26 +80,27 @@ const SingleArticle = props => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        window.alert(`comment has been submitted successfully`)
+        setIsLoading(true)
+
+        window.alert(`comment has been submitted successfully`);
         postComment(comment)
             .then(({ data }) => {
+                setNewComment(true);
                 setArticle(prevArticle => ({
                     ...prevArticle,
                     comment_count: prevArticle.comment_count + 1,
                 }));
                 setComment(data.comments.comment.rows[0]);
+                setIsLoading(false);
             })
             .catch(err => {
                 setError(true);
                 setIsLoading(false);
-            });  
+            });
     };
 
-    if (error) return <h1>Something went wrong!</h1>;
-    if (isLoading) return <p>Loading...</p>;
-
     return (
-        <div> 
+        <div>
             <h2>{article.title}</h2>
             <p>
                 <span style={{ fontWeight: 'bold' }}>Topic: </span>
@@ -120,7 +123,7 @@ const SingleArticle = props => {
                 <span style={{ fontWeight: 'bold' }}>Votes: </span>
                 {article.votes}
                 <br />
-                <button
+                <Button
                     className="votes-btn"
                     onClick={event => {
                         handleVote(event, article.article_id);
@@ -128,8 +131,8 @@ const SingleArticle = props => {
                 >
                     <HandThumbsUpFill />
                     Like
-                </button>
-                <button
+                </Button>
+                <Button
                     className="votes-btn"
                     onClick={event => {
                         handleDownVote(event, article.article_id);
@@ -137,7 +140,7 @@ const SingleArticle = props => {
                 >
                     <HandThumbsDownFill />
                     Dislike
-                </button>
+                </Button>
             </p>
             <div>
                 {initialValue && (
@@ -159,11 +162,11 @@ const SingleArticle = props => {
                             />
                         </Form.Group>
 
-                        <button type="submit">Submit</button>
+                        <Button disabled={isLoading} type="submit">Submit</Button>
                     </Form>
                 )}
 
-                <Comments comment={comment} />
+                <Comments comment={comment} newComment={newComment} setNewCommentOne={setNewComment}/>
             </div>
         </div>
     );
