@@ -4,6 +4,8 @@ import { getArticle, postComment } from '../utils/api';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
 import Form from 'react-bootstrap/Form';
+import { updateVotes, getArticle, updateDownVotes } from '../utils/api';
+import { HandThumbsDownFill, HandThumbsUpFill } from 'react-bootstrap-icons';
 
 const SingleArticle = props => {
     const { id } = useParams();
@@ -17,6 +19,44 @@ const SingleArticle = props => {
         body: '',
         article_id: id,
     });
+
+    const handleVote = (event, article_id) => {
+        event.preventDefault();
+        setArticle(prevArticle => ({
+            ...prevArticle,
+            votes: prevArticle.votes + 1,
+        }));
+        updateVotes(article_id)
+            .then(({ data }) => {
+                setArticle(data.article);
+            })
+            .catch(err => {
+                setArticle(prevArticle => ({
+                    ...prevArticle,
+                    votes: prevArticle.votes - 1,
+                }));
+            });
+    };
+
+    const handleDownVote = (event, article_id) => {
+        event.preventDefault();
+
+        setArticle(prevArticle => ({
+            ...prevArticle,
+            votes: prevArticle.votes - 1,
+        }));
+
+        updateDownVotes(article_id)
+            .then(({ data }) => {
+                setArticle(data.article);
+            })
+            .catch(err => {
+                setArticle(prevArticle => ({
+                    ...prevArticle,
+                    votes: prevArticle.votes + 1,
+                }));
+            });
+    };
 
     useEffect(() => {
         getArticle(id)
@@ -55,6 +95,7 @@ const SingleArticle = props => {
     };
 
     if (error) return <h1>Something went wrong!</h1>;
+    if (isLoading) return <p>Loading...</p>;
 
     return (
         <div> 
@@ -79,10 +120,25 @@ const SingleArticle = props => {
             <p>
                 <span style={{ fontWeight: 'bold' }}>Votes: </span>
                 {article.votes}
-            </p>
-            <p>
-                <span style={{ fontWeight: 'bold' }}>Comment count: </span>
-                {article.comment_count}
+                <br />
+                <button
+                    className="votes-btn"
+                    onClick={event => {
+                        handleVote(event, article.article_id);
+                    }}
+                >
+                    <HandThumbsUpFill />
+                    Like
+                </button>
+                <button
+                    className="votes-btn"
+                    onClick={event => {
+                        handleDownVote(event, article.article_id);
+                    }}
+                >
+                    <HandThumbsDownFill />
+                    Dislike
+                </button>
             </p>
             <div>
                 {initialValue && (
