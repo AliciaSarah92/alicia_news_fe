@@ -4,7 +4,7 @@ import { getArticle, postComment } from '../utils/api';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
 import Form from 'react-bootstrap/Form';
- 
+
 const SingleArticle = props => {
     const { id } = useParams();
     const [article, setArticle] = useState({});
@@ -36,24 +36,28 @@ const SingleArticle = props => {
             [event.target.name]: event.target.value,
         });
     };
-    
+
     const handleSubmit = event => {
         event.preventDefault();
-
+        window.alert(`comment has been submitted successfully`)
         postComment(comment)
             .then(({ data }) => {
-                console.log(data);
+                setArticle(prevArticle => ({
+                    ...prevArticle,
+                    comment_count: prevArticle.comment_count + 1,
+                }));
+                setComment(data.comments.comment.rows[0]);
             })
             .catch(err => {
                 setError(true);
                 setIsLoading(false);
-            });
+            });  
     };
 
     if (error) return <h1>Something went wrong!</h1>;
 
     return (
-        <div>
+        <div> 
             <h2>{article.title}</h2>
             <p>
                 <span style={{ fontWeight: 'bold' }}>Topic: </span>
@@ -99,12 +103,12 @@ const SingleArticle = props => {
                                 onChange={handleChange}
                             />
                         </Form.Group>
-                       
-                        <button type='submit'>Submit</button>
+
+                        <button type="submit">Submit</button>
                     </Form>
                 )}
 
-                <Comments />
+                <Comments comment={comment} />
             </div>
         </div>
     );
