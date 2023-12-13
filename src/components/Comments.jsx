@@ -10,7 +10,6 @@ const Comments = props => {
     const [error, setError] = useState(false);
     const [commentsLoaded, setCommentsLoaded] = useState(false);
     
-
     useEffect(() => {
         getComments(id)
             .then(({ data }) => {

@@ -1,10 +1,9 @@
 import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArticle, postComment } from '../utils/api';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
 import Form from 'react-bootstrap/Form';
-import { updateVotes, getArticle, updateDownVotes } from '../utils/api';
+import { updateVotes, getArticle, updateDownVotes, postComment } from '../utils/api';
 import { HandThumbsDownFill, HandThumbsUpFill } from 'react-bootstrap-icons';
 
 const SingleArticle = props => {
