@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
@@ -15,11 +15,13 @@ const SingleArticle = props => {
     const user = localStorage.getItem('user');
     const initialValue = JSON.parse(user);
     const [newComment, setNewComment] = useState(false);
-    const [comment, setComment] = useState({
+    const [passedComment, setPassedComment] = useState({});
+    const clearbody = {
         username: initialValue ? initialValue.username : 'Guest',
         body: '',
         article_id: id,
-    });
+    };
+    const [comment, setComment] = useState({ ...clearbody });
 
     const handleVote = (event, article_id) => {
         event.preventDefault();
@@ -58,7 +60,6 @@ const SingleArticle = props => {
                 }));
             });
     };
-
     useEffect(() => {
         getArticle(id)
             .then(({ data }) => {
@@ -77,12 +78,10 @@ const SingleArticle = props => {
             [event.target.name]: event.target.value,
         });
     };
-
     const handleSubmit = event => {
         event.preventDefault();
-        setIsLoading(true)
+        setIsLoading(true);
 
-        window.alert(`comment has been submitted successfully`);
         postComment(comment)
             .then(({ data }) => {
                 setNewComment(true);
@@ -90,8 +89,11 @@ const SingleArticle = props => {
                     ...prevArticle,
                     comment_count: prevArticle.comment_count + 1,
                 }));
-                setComment(data.comments.comment.rows[0]);
                 setIsLoading(false);
+                setPassedComment(data.comments.comment.rows[0]);
+                setComment({ ...clearbody });
+
+                window.alert(`comment has been submitted successfully`);
             })
             .catch(err => {
                 setError(true);
@@ -145,6 +147,7 @@ const SingleArticle = props => {
             <div>
                 {initialValue && (
                     <Form
+                        id="formComment_form"
                         className="post-comment"
                         onSubmit={handleSubmit}
                     >
@@ -162,11 +165,19 @@ const SingleArticle = props => {
                             />
                         </Form.Group>
 
-                        <Button disabled={isLoading} type="submit">Submit</Button>
+                        <Button
+                            disabled={isLoading}
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
                     </Form>
                 )}
-
-                <Comments comment={comment} newComment={newComment} setNewCommentOne={setNewComment}/>
+                <Comments
+                    comment={passedComment}
+                    newComment={newComment}
+                    setNewCommentOne={setNewComment}
+                />
             </div>
         </div>
     );
