@@ -23,7 +23,6 @@ const Home = () => {
     const preGetArticles = (sort) => {
         setIsLoading(true);
         let params = objectToQueryString(sort);
-        console.log(params);
         getArticles(false, params).then(({ data }) => {
             setArticles(data.articles);
             setIsLoading(false);

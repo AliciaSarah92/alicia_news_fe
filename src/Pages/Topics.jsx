@@ -15,7 +15,7 @@ const Topics = props => {
         <div>
             {topics.map(topic => {
                 return (
-                    <div>
+                    <div key={topic.slug}>
                         <h2>{topic.slug}</h2>
                         <p>{topic.description}</p>
                         <Link

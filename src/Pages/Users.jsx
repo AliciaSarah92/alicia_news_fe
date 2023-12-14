@@ -8,7 +8,7 @@ const Users = props => {
 
     const handleClick = (event, user) => {
         event.preventDefault();
-        props.setLoggedIn(user);
+        props.setLoggedInUser(user);
         localStorage.setItem('user', JSON.stringify(user));
         window.alert(`You are logged in as ${user.username}`);
     };
