@@ -6,6 +6,7 @@ import SingleArticle from './Pages/SingleArticle';
 import Users from './Pages/Users';
 import Navbar from './components/Navbar';
 import Topics from './Pages/Topics';
+import Articles from './Pages/Articles';
 
 function App() {
     const user = localStorage.getItem('user');
@@ -31,6 +32,10 @@ function App() {
                 <Route
                     path="/topics"
                     element={<Topics />}
+                /> 
+                 <Route
+                    path="/topics/:topic"
+                    element={<Articles />}
                 /> 
             </Routes>
         </>

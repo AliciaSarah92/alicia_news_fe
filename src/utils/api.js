@@ -4,8 +4,11 @@ const api = axios.create({
     baseURL: 'https://alicia-news.onrender.com/api',
 });
 
-function getArticles() {
-    return api.get('/articles');
+function getArticles(topic) {
+    if (!topic) {
+        return api.get('/articles');
+    }
+    return api.get(`/articles?topic=${topic}`);
 }
 
 function getArticle(id) {
@@ -37,8 +40,8 @@ function deleteComment(id) {
     return api.delete(`/comments/${id}`);
 }
 
-function getArticlesByTopic(topic) {
-    return api.get(`/topics?topic=${topic}`);
-}
+function getTopics() {
+    return api.get('/topics');
+}   
 
-export { getArticles, getArticle, getComments, updateVotes, updateDownVotes, postComment, getUsers, deleteComment, getArticlesByTopic };
+export { getArticles, getArticle, getComments, updateVotes, updateDownVotes, postComment, getUsers, deleteComment, getTopics };
