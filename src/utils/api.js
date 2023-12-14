@@ -33,4 +33,8 @@ function updateDownVotes(id) {
     return api.patch(`/articles/${id}`, { inc_votes: -1 });
 }
 
-export { getArticles, getArticle, getComments, updateVotes, updateDownVotes, postComment, getUsers };
+function deleteComment(id) {
+    return api.delete(`/comments/${id}`);
+}
+
+export { getArticles, getArticle, getComments, updateVotes, updateDownVotes, postComment, getUsers, deleteComment };

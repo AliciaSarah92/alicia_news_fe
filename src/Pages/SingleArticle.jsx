@@ -126,7 +126,7 @@ const SingleArticle = props => {
                 {article.votes}
                 <br />
                 <Button
-                    className="votes-btn"
+                    className="styled-btn"
                     onClick={event => {
                         handleVote(event, article.article_id);
                     }}
@@ -135,7 +135,7 @@ const SingleArticle = props => {
                     Like
                 </Button>
                 <Button
-                    className="votes-btn"
+                    className="styled-btn"
                     onClick={event => {
                         handleDownVote(event, article.article_id);
                     }}
@@ -152,22 +152,24 @@ const SingleArticle = props => {
                         onSubmit={handleSubmit}
                     >
                         <Form.Group
-                            className="mb-3"
+                            className="mb-3 mx-auto"
                             controlId="formComment_name"
                         >
-                            <Form.Label>Comment: </Form.Label>
                             <Form.Control
-                                type="text"
+                                as="textarea"
+                                rows={3}
                                 name="body"
                                 placeholder="Enter comment"
                                 value={comment.body}
                                 onChange={handleChange}
+                                className="comment-input"
                             />
                         </Form.Group>
 
                         <Button
                             disabled={isLoading}
                             type="submit"
+                            className="styled-btn"
                         >
                             Submit
                         </Button>
