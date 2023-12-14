@@ -8,6 +8,7 @@ const Comments = props => {
     const [comments, setComments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState('');
     const user = localStorage.getItem('user');
 
     useEffect(() => {
@@ -52,13 +53,16 @@ const Comments = props => {
             })
             .catch(err => {
                 setError(true);
+                setErrorMsg('Error deleting comment');
             })
             .finally(() => {
                 setIsLoading(false);
             });
     };
-
-    if (error) return <h1>Could not load comments</h1>;
+    
+    if (error) {
+        window.alert('Error loading comments');
+    }
 
     return (
         <div>
