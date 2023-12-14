@@ -1,12 +1,19 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import SingleArticle from './Pages/SingleArticle';
+import Users from './Pages/Users';
+import Navbar from './components/Navbar';
 
 function App() {
+    const user = localStorage.getItem('user');
+    const [loggedIn, setLoggedIn] = useState(JSON.parse(user) || null)
+    
+
     return (
         <>
+            <Navbar loggedIn={loggedIn} />
             <Routes>
                 <Route
                     path="/"
@@ -14,16 +21,16 @@ function App() {
                 />
                 <Route
                     path="/articles/:id"
-                    element={<SingleArticle />}
-                />
-                {/* <Route
-                    path="/basket"
-                    element={<Basket basket={basket} />}
+                    element={<SingleArticle loggedIn={loggedIn} />}
                 />
                 <Route
                     path="/users"
+                    element={<Users setLoggedIn={setLoggedIn} />}
+                />
+                {/* <Route
+                    path="/users"
                     element={<User />}
-                /> */}
+                />  */}
             </Routes>
         </>
     );

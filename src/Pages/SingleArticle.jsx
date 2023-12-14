@@ -1,15 +1,27 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Comments from '../components/Comments';
-import { updateVotes, getArticle, updateDownVotes } from '../utils/api';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { updateVotes, getArticle, updateDownVotes, postComment } from '../utils/api';
 import { HandThumbsDownFill, HandThumbsUpFill } from 'react-bootstrap-icons';
 
-const SingleArticle = () => {
+const SingleArticle = props => {
     const { id } = useParams();
     const [article, setArticle] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
+    const user = localStorage.getItem('user');
+    const initialValue = JSON.parse(user);
+    const [newComment, setNewComment] = useState(false);
+    const [passedComment, setPassedComment] = useState({});
+    const clearbody = {
+        username: initialValue ? initialValue.username : 'Guest',
+        body: '',
+        article_id: id,
+    };
+    const [comment, setComment] = useState({ ...clearbody });
 
     const handleVote = (event, article_id) => {
         event.preventDefault();
@@ -48,7 +60,6 @@ const SingleArticle = () => {
                 }));
             });
     };
-
     useEffect(() => {
         getArticle(id)
             .then(({ data }) => {
@@ -57,12 +68,38 @@ const SingleArticle = () => {
             })
             .catch(err => {
                 setError(true);
-                setIsLoading;
+                setIsLoading(false);
             });
     }, [id]);
 
-    if (error) return <h1>Something went wrong!</h1>;
-    if (isLoading) return <p>Loading...</p>;
+    const handleChange = event => {
+        setComment({
+            ...comment,
+            [event.target.name]: event.target.value,
+        });
+    };
+    const handleSubmit = event => {
+        event.preventDefault();
+        setIsLoading(true);
+
+        postComment(comment)
+            .then(({ data }) => {
+                setNewComment(true);
+                setArticle(prevArticle => ({
+                    ...prevArticle,
+                    comment_count: prevArticle.comment_count + 1,
+                }));
+                setIsLoading(false);
+                setPassedComment(data.comments.comment.rows[0]);
+                setComment({ ...clearbody });
+
+                window.alert(`comment has been submitted successfully`);
+            })
+            .catch(err => {
+                setError(true);
+                setIsLoading(false);
+            });
+    };
 
     return (
         <div>
@@ -88,7 +125,7 @@ const SingleArticle = () => {
                 <span style={{ fontWeight: 'bold' }}>Votes: </span>
                 {article.votes}
                 <br />
-                <button
+                <Button
                     className="votes-btn"
                     onClick={event => {
                         handleVote(event, article.article_id);
@@ -96,8 +133,8 @@ const SingleArticle = () => {
                 >
                     <HandThumbsUpFill />
                     Like
-                </button>
-                <button
+                </Button>
+                <Button
                     className="votes-btn"
                     onClick={event => {
                         handleDownVote(event, article.article_id);
@@ -105,10 +142,42 @@ const SingleArticle = () => {
                 >
                     <HandThumbsDownFill />
                     Dislike
-                </button>
+                </Button>
             </p>
             <div>
-                <Comments />
+                {initialValue && (
+                    <Form
+                        id="formComment_form"
+                        className="post-comment"
+                        onSubmit={handleSubmit}
+                    >
+                        <Form.Group
+                            className="mb-3"
+                            controlId="formComment_name"
+                        >
+                            <Form.Label>Comment: </Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="body"
+                                placeholder="Enter comment"
+                                value={comment.body}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
+                        <Button
+                            disabled={isLoading}
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
+                    </Form>
+                )}
+                <Comments
+                    comment={passedComment}
+                    newComment={newComment}
+                    setNewCommentOne={setNewComment}
+                />
             </div>
         </div>
     );
