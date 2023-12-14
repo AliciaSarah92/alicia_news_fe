@@ -13,7 +13,7 @@ function App() {
 
     return (
         <>
-            <Navbar loggedIn={loggedIn} />
+            <Navbar setLoggedInUser={setLoggedIn} loggedIn={loggedIn} />
             <Routes>
                 <Route
                     path="/"
@@ -25,7 +25,7 @@ function App() {
                 />
                 <Route
                     path="/users"
-                    element={<Users setLoggedIn={setLoggedIn} />}
+                    element={<Users setLoggedInUser={setLoggedIn} loggedIn={loggedIn} />}
                 />
                 {/* <Route
                     path="/users"
