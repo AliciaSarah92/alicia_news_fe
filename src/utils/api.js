@@ -37,4 +37,8 @@ function deleteComment(id) {
     return api.delete(`/comments/${id}`);
 }
 
-export { getArticles, getArticle, getComments, updateVotes, updateDownVotes, postComment, getUsers, deleteComment };
+function getArticlesByTopic(topic) {
+    return api.get(`/topics?topic=${topic}`);
+}
+
+export { getArticles, getArticle, getComments, updateVotes, updateDownVotes, postComment, getUsers, deleteComment, getArticlesByTopic };

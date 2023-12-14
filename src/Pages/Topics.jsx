@@ -1,13 +1,26 @@
-import { React } from 'react';
-import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { getArticlesByTopic } from '../utils/api';
 
-const ArticleList = props => {
+const Topics = props => {
+    const queryClient = new QueryClient();
+
+    const {
+        data: articles,
+        isLoading,
+        error,
+    } = useQuery('topic', () => {
+        if (isLoading) return <div>Loading posts...</div>;
+        return getArticlesByTopic(props.topic);
+    });
+
+    if (error) return <div>Something went wrong...</div>;
+
     return (
         <div>
             <ul className="article-list">
-                {props.articles &&
-                    props.articles.map(article => {
+                {articles &&
+                    articles.map(article => {
                         return (
                             <li
                                 className="article-list-item"
@@ -49,4 +62,4 @@ const ArticleList = props => {
     );
 };
 
-export default ArticleList;
+export default Topics;
