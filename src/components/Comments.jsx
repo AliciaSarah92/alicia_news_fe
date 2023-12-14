@@ -86,7 +86,7 @@ const Comments = props => {
                                 {isAuthor(comment) && (
                                     <button
                                         disabled={isLoading}
-                                        className="delete-btn"
+                                        className="styled-btn"
                                         onClick={event => {
                                             handleDelete(event, comment.comment_id);
                                         }}
